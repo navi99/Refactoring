@@ -69,7 +69,6 @@ public class OrderDAO {
 			}
 		} catch (SQLException e) {
 			LOGGER.error(e);
-			LOGGER.debug("In getOrderDetailForStudent :", e);
 		} finally {
 			try {
 				if (gc.rs1 != null)
