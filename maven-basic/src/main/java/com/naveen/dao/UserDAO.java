@@ -6,6 +6,8 @@ import com.naveen.connection.GetConnection;
 
 import org.apache.log4j.Logger;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,37 +24,29 @@ public class UserDAO {
 
     public boolean insertUser(UserBean userBean) {
         final String sql = "insert into user (uname, pass,utype, display_name, mobile) values(?,?,?,?,?)";
-        try {
-            connection.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-            connection.preparedStatement1.setString(1, userBean.getUserName().toUpperCase());
-            connection.preparedStatement1.setString(2, userBean.getPassWord());
-            connection.preparedStatement1.setString(3, userBean.getUserType());
-            connection.preparedStatement1.setString(4, userBean.getDisplayName().toUpperCase());
-            connection.preparedStatement1.setString(5, userBean.getMobNo());
-            return connection.preparedStatement1.executeUpdate() > 0;
+        try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, userBean.getUserName().toUpperCase());
+            preparedStatement.setString(2, userBean.getPassWord());
+            preparedStatement.setString(3, userBean.getUserType());
+            preparedStatement.setString(4, userBean.getDisplayName().toUpperCase());
+            preparedStatement.setString(5, userBean.getMobNo());
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e);
         } finally {
-            try {
-                if (connection.preparedStatement1 != null) {
-                    connection.preparedStatement1.close();   
-                }
-                GetConnection.getMySQLConnection().close();
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            closeConnection();
         }
         return false;
     }
-
+    
     // this method is used in user.jsp to display all registered users.
     public List<UserBean> getAllUsers() {
         final ArrayList<UserBean> myList = new ArrayList<UserBean>();
         final String sql = "select * from user";
-        try {
-            connection.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-            connection.resultSet1 = connection.preparedStatement1.executeQuery();
-            while (connection.resultSet1.next()) {
+        ResultSet resultSet = null;
+        try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 UserBean tempUser = new UserBean();
                 tempUser.setUserId(connection.resultSet1.getInt(1));
                 tempUser.setUserName(connection.resultSet1.getString(2));
@@ -65,21 +59,15 @@ public class UserDAO {
         } catch (SQLException e) {
             LOGGER.error(e);
         } finally {
-            try {
-                connection.resultSet1.close();
-                connection.preparedStatement1.clearBatch();
-                connection.preparedStatement1.close();
-                GetConnection.getMySQLConnection().close();
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            closeResultSet(resultSet);
+            closeConnection();
         }
         return myList;
     }
 
-    // method is used to check valid user
+    // method is used to check vali     d user
     public boolean validateUser(LoginBean login) {
-        final String sql = "select * from user where uname =? and pass =? and utype=?";
+        final String sql = "select * from user where uname = ? and pass = ? and utype = ?";
         try {
             connection.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
             connection.preparedStatement1.setString(1, login.getuName());
@@ -107,11 +95,10 @@ public class UserDAO {
 
     public int getUserId(String uName) {
         final String sql = "select uid from user where uname = ?";
-        try {
-            connection.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-            connection.preparedStatement1.setString(1, uName);
-            connection.resultSet1 = connection.preparedStatement1.executeQuery();
-            if (connection.resultSet1.next()) {
+        try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, uName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 return connection.resultSet1.getInt(1);
             }
         } catch (SQLException e) {
@@ -120,9 +107,6 @@ public class UserDAO {
             try {
                 if (connection.resultSet1 != null) {
                     connection.resultSet1.close();   
-                }
-                if (connection.preparedStatement1 != null) {
-                    connection.preparedStatement1.close();   
                 }
                 GetConnection.getMySQLConnection().close();
             } catch (SQLException e) {
@@ -168,14 +152,33 @@ public class UserDAO {
             LOGGER.error(e);
         } finally {
             try {
-                if (connection.preparedStatement1 != null)
-                    connection.preparedStatement1.close();
+                if (connection.preparedStatement1 != null) {
+                    connection.preparedStatement1.close();   
+                }
                 GetConnection.getMySQLConnection().close();
             } catch (SQLException e) {
                 LOGGER.error(e);
             }
         }
         return false;
+    }
+    
+    private void closeConnection() {
+        try {
+            GetConnection.getMySQLConnection().close();
+        } catch (SQLException e) {
+            LOGGER.error(e);
+        }
+    }
+    
+    private void closeResultSet(ResultSet resultSet) {
+        try {
+            if(resultSet != null) {
+                resultSet.close();   
+            }
+        } catch(SQLException e) {
+             LOGGER.error(e);  
+        }
     }
 
 }
