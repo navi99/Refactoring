@@ -101,24 +101,24 @@ public class AuditDAO {
 
 		ArrayList<AuditReportBean> finalReport = new ArrayList<AuditReportBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, startDate);
-			gc.ps1.setString(2, endDate);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, startDate);
+			gc.preparedStatement1.setString(2, endDate);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 			
 			//Will store OID, Tax, and sum of taxamount for particular OID
 			HashMap<String, HashMap<String, Double>> hashMap = new HashMap<String, HashMap<String,Double>>();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				// System.out.println(gc.rs1.getString(1));
 				AuditReportBean auditBean  = new AuditReportBean();
-				auditBean.setInvoiceNo(gc.rs1.getInt(1));
-				auditBean.setDate(gc.rs1.getString(2));
-				auditBean.setBillAmount(gc.rs1.getDouble(3));
-				auditBean.setGrandTotal(gc.rs1.getDouble(4));
-				auditBean.setOid(gc.rs1.getString(5));
-				auditBean.setHandlingCharges(gc.rs1.getDouble(6));
+				auditBean.setInvoiceNo(gc.resultSet1.getInt(1));
+				auditBean.setDate(gc.resultSet1.getString(2));
+				auditBean.setBillAmount(gc.resultSet1.getDouble(3));
+				auditBean.setGrandTotal(gc.resultSet1.getDouble(4));
+				auditBean.setOid(gc.resultSet1.getString(5));
+				auditBean.setHandlingCharges(gc.resultSet1.getDouble(6));
 				
 				List<HashMap<String, Double>> taxsAmount = new ArrayList<HashMap<String,Double>>();
 				
@@ -129,7 +129,7 @@ public class AuditDAO {
 					double totalVal = 0;
 
 					// this is to calculate the taxes returned by the db, in the form of ',', which we are getting by GROUP_CONCAT function 
-					for (String val : gc.rs1
+					for (String val : gc.resultSet1
 							.getString("Tax@" + temp.toString()).split(",")) {
 						totalVal += Double.parseDouble(val);
 					}
@@ -162,11 +162,11 @@ public class AuditDAO {
 		}finally {
 			try {
 
-				if (gc.ps1 != null) {
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null) {
+					gc.preparedStatement1.close();
 				}
-				if (gc.rs1 != null) {
-					gc.rs1.close();
+				if (gc.resultSet1 != null) {
+					gc.resultSet1.close();
 				}
 				GetConnection.closeConnection();
 
@@ -185,13 +185,13 @@ public class AuditDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, startDate);
-			gc.ps1.setString(2, endDate);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, startDate);
+			gc.preparedStatement1.setString(2, endDate);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
-				list.add(gc.rs1.getDouble(1));
+			while (gc.resultSet1.next()) {
+				list.add(gc.resultSet1.getDouble(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -199,8 +199,8 @@ public class AuditDAO {
 		} finally {
 			try {
 
-				if (gc.ps1 != null) {
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null) {
+					gc.preparedStatement1.close();
 				}
 				GetConnection.closeConnection();
 
@@ -233,15 +233,15 @@ public class AuditDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, startDate);
-			gc.ps1.setString(2, endDate);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, startDate);
+			gc.preparedStatement1.setString(2, endDate);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				
-				System.out.println(gc.rs1.getDouble(1));
-				list.add(gc.rs1.getDouble(1));
+				System.out.println(gc.resultSet1.getDouble(1));
+				list.add(gc.resultSet1.getDouble(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -249,8 +249,8 @@ public class AuditDAO {
 		} finally {
 			try {
 
-				if (gc.ps1 != null) {
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null) {
+					gc.preparedStatement1.close();
 				}
 				GetConnection.closeConnection();
 

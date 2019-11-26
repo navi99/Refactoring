@@ -13,8 +13,8 @@ import org.apache.log4j.PropertyConfigurator;
 
 public class GetConnection {
 	private static Connection conn = null;
-	public PreparedStatement ps1 = null, ps2 = null, ps3 = null, ps4 = null, ps5 = null, ps6 = null;
-	public ResultSet rs1 = null, rs2 = null, rs3 = null, rs4 = null, rs5 = null;
+	public PreparedStatement preparedStatement1 = null, ps2 = null, ps3 = null, ps4 = null, ps5 = null, ps6 = null;
+	public ResultSet resultSet1 = null, rs2 = null, rs3 = null, rs4 = null, rs5 = null;
 	public java.sql.Statement stmt = null;
 	public java.sql.CallableStatement cs1 = null, cs2 = null;
 	public java.sql.ResultSetMetaData rsmd = null;

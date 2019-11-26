@@ -27,13 +27,13 @@ public class UniformDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, uniformName.toUpperCase());
-			gc.ps1.setString(2, shortCode.toUpperCase());
-			gc.ps1.setInt(3, uId);
-			gc.ps1.setString(4, sp);
-			gc.ps1.setString(5, hsn);
-			return gc.ps1.executeUpdate() > 0;
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, uniformName.toUpperCase());
+			gc.preparedStatement1.setString(2, shortCode.toUpperCase());
+			gc.preparedStatement1.setInt(3, uId);
+			gc.preparedStatement1.setString(4, sp);
+			gc.preparedStatement1.setString(5, hsn);
+			return gc.preparedStatement1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class UniformDAO {
 			logger.info("Uniform Added with  name " + uniformName);
 			try {
 				//if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -60,16 +60,16 @@ public class UniformDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				UniformBean temp = new UniformBean();
-				temp.setUniformId(gc.rs1.getInt(1));
-				temp.setuName(gc.rs1.getString(2));
-				temp.setShortCode(gc.rs1.getString(3));
-				temp.setSp(gc.rs1.getString(5));
-				temp.setHsn(gc.rs1.getString(6));
+				temp.setUniformId(gc.resultSet1.getInt(1));
+				temp.setuName(gc.resultSet1.getString(2));
+				temp.setShortCode(gc.resultSet1.getString(3));
+				temp.setSp(gc.resultSet1.getString(5));
+				temp.setHsn(gc.resultSet1.getString(6));
 				uniformList.add(temp);
 			}
 
@@ -78,8 +78,8 @@ public class UniformDAO {
 		} finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -100,19 +100,19 @@ public class UniformDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setString(2, cls);
-			gc.ps1.setString(3, sex);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setString(2, cls);
+			gc.preparedStatement1.setString(3, sex);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				UniformBean temp = new UniformBean();
 
-				temp.setUniformId(gc.rs1.getInt(1));
-				temp.setuName(gc.rs1.getString(2));
-				temp.setShortCode(gc.rs1.getString(3));
+				temp.setUniformId(gc.resultSet1.getInt(1));
+				temp.setuName(gc.resultSet1.getString(2));
+				temp.setShortCode(gc.resultSet1.getString(3));
 
 				assignUniform.add(temp);
 
@@ -123,8 +123,8 @@ public class UniformDAO {
 		}finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -145,14 +145,14 @@ public class UniformDAO {
 		for (int i = 0; i < uniformIds.length; i++) {
 
 			try {
-				gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(
+				gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(
 						sql);
-				gc.ps1.setInt(1, schId);
-				gc.ps1.setString(2, cls.toUpperCase());
-				gc.ps1.setString(3, sex.toUpperCase());
-				gc.ps1.setString(4, uniformIds[i].toUpperCase());
-				gc.ps1.setInt(5, 1);
-				gc.ps1.executeUpdate();
+				gc.preparedStatement1.setInt(1, schId);
+				gc.preparedStatement1.setString(2, cls.toUpperCase());
+				gc.preparedStatement1.setString(3, sex.toUpperCase());
+				gc.preparedStatement1.setString(4, uniformIds[i].toUpperCase());
+				gc.preparedStatement1.setInt(5, 1);
+				gc.preparedStatement1.executeUpdate();
 
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
@@ -160,7 +160,7 @@ public class UniformDAO {
 
 				try {
 					//if(gc.rs1 != null)	gc.rs1.close();
-					if(gc.ps1 !=null) gc.ps1.close();
+					if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 					GetConnection.getMySQLConnection().close();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -193,23 +193,23 @@ public class UniformDAO {
 		ArrayList<ArrayList<Object>> myobj = new ArrayList<ArrayList<Object>>();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setString(2, cls.toUpperCase());
-			gc.ps1.setString(3, sex.toUpperCase());
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setString(2, cls.toUpperCase());
+			gc.preparedStatement1.setString(3, sex.toUpperCase());
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				ArrayList<Object> temp = new ArrayList<Object>();
-				temp.add(gc.rs1.getInt(1));  // auid 
-				temp.add(gc.rs1.getString(2)); // uniform name 
-				temp.add(gc.rs1.getDouble(3)); // cost 
-				temp.add(gc.rs1.getDouble(4)); // cgst 
-				temp.add(gc.rs1.getDouble(5)); // sgst 
-				temp.add(gc.rs1.getDouble(6)); // igst 
-				temp.add(gc.rs1.getInt(7));   // ordersorder 
-				temp.add(gc.rs1.getDouble(8)); // courier cost 
+				temp.add(gc.resultSet1.getInt(1));  // auid 
+				temp.add(gc.resultSet1.getString(2)); // uniform name 
+				temp.add(gc.resultSet1.getDouble(3)); // cost 
+				temp.add(gc.resultSet1.getDouble(4)); // cgst 
+				temp.add(gc.resultSet1.getDouble(5)); // sgst 
+				temp.add(gc.resultSet1.getDouble(6)); // igst 
+				temp.add(gc.resultSet1.getInt(7));   // ordersorder 
+				temp.add(gc.resultSet1.getDouble(8)); // courier cost 
 				myobj.add(temp);
 			}
 		} catch (SQLException e) {
@@ -217,8 +217,8 @@ public class UniformDAO {
 		}finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -247,23 +247,23 @@ public class UniformDAO {
 		logger.info("Courier Cost Got is "  + courierCost);
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 			
-			gc.ps1.setDouble(1, price);
-			gc.ps1.setDouble(2, cgst);
-			gc.ps1.setDouble(3, sgst);
-			gc.ps1.setDouble(4, igst);
-			gc.ps1.setInt(5, ordersOrder);
-			gc.ps1.setDouble(6, courierCost);
-			gc.ps1.setInt(7, auId);
+			gc.preparedStatement1.setDouble(1, price);
+			gc.preparedStatement1.setDouble(2, cgst);
+			gc.preparedStatement1.setDouble(3, sgst);
+			gc.preparedStatement1.setDouble(4, igst);
+			gc.preparedStatement1.setInt(5, ordersOrder);
+			gc.preparedStatement1.setDouble(6, courierCost);
+			gc.preparedStatement1.setInt(7, auId);
 
-			return gc.ps1.executeUpdate() > 0;
+			return gc.preparedStatement1.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			GetConnection.closeConnection();
 			try {
-				gc.ps1.close();
+				gc.preparedStatement1.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -280,18 +280,18 @@ public class UniformDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 
 			for (MesurementOrderBean temp : myList) {
-				gc.ps1.setString(1, temp.getName().toUpperCase());
-				gc.ps1.setInt(2, temp.getmOrder());
-				gc.ps1.setInt(3, temp.getuId());
-				gc.ps1.setInt(4, temp.getUnId());
+				gc.preparedStatement1.setString(1, temp.getName().toUpperCase());
+				gc.preparedStatement1.setInt(2, temp.getmOrder());
+				gc.preparedStatement1.setInt(3, temp.getuId());
+				gc.preparedStatement1.setInt(4, temp.getUnId());
 
-				gc.ps1.addBatch();
+				gc.preparedStatement1.addBatch();
 			}
 
-			return gc.ps1.executeBatch().length > 0;
+			return gc.preparedStatement1.executeBatch().length > 0;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -299,7 +299,7 @@ public class UniformDAO {
 
 			try {
 				//if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -317,16 +317,16 @@ public class UniformDAO {
 		GetConnection gc = new GetConnection();
 		List<HouseBean> myList = new ArrayList<HouseBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 
-			gc.rs1 = gc.ps1.executeQuery();
-			while (gc.rs1.next()) {
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
+			while (gc.resultSet1.next()) {
 				HouseBean hb = new HouseBean();
-				hb.sethId(gc.rs1.getInt(1));
-				hb.setColor1(gc.rs1.getString(2).toUpperCase());
-				hb.setColor2(gc.rs1.getString(3).toUpperCase());
-				hb.setColor3(gc.rs1.getString(4));
-				hb.setColor4(gc.rs1.getString(5));
+				hb.sethId(gc.resultSet1.getInt(1));
+				hb.setColor1(gc.resultSet1.getString(2).toUpperCase());
+				hb.setColor2(gc.resultSet1.getString(3).toUpperCase());
+				hb.setColor3(gc.resultSet1.getString(4));
+				hb.setColor4(gc.resultSet1.getString(5));
 
 				myList.add(hb);
 
@@ -336,8 +336,8 @@ public class UniformDAO {
 		}finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -366,15 +366,15 @@ public class UniformDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 
-			gc.ps1.setInt(1, houseId);
-			gc.ps1.setInt(2, schId);
-			gc.ps1.setString(3, cls);
-			gc.ps1.setString(4, sex);
-			gc.ps1.setInt(5, uniformId);
+			gc.preparedStatement1.setInt(1, houseId);
+			gc.preparedStatement1.setInt(2, schId);
+			gc.preparedStatement1.setString(3, cls);
+			gc.preparedStatement1.setString(4, sex);
+			gc.preparedStatement1.setInt(5, uniformId);
 
-			return gc.ps1.executeUpdate() > 0;
+			return gc.preparedStatement1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -382,7 +382,7 @@ public class UniformDAO {
 
 			try {
 				//if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -415,18 +415,18 @@ public class UniformDAO {
 					//System.out.println("uniform id is " + tt[i].toString());
 
 					try {
-						gc.ps1 = GetConnection.getMySQLConnection()
+						gc.preparedStatement1 = GetConnection.getMySQLConnection()
 								.prepareStatement(sql);
-						gc.ps1.setInt(1, Integer.parseInt(tt[i].toString()));
-						gc.rs1 = gc.ps1.executeQuery();
+						gc.preparedStatement1.setInt(1, Integer.parseInt(tt[i].toString()));
+						gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
 						ArrayList<MesurementOrderBean> mo = new ArrayList<MesurementOrderBean>();
 
-						while (gc.rs1.next()) {
+						while (gc.resultSet1.next()) {
 							// (mId, name, mOrder, uId, unId)
-							mo.add(new MesurementOrderBean(gc.rs1.getInt(1),
-									gc.rs1.getString(2), gc.rs1.getInt(3),
-									gc.rs1.getInt(4), Integer.parseInt(tt[i]
+							mo.add(new MesurementOrderBean(gc.resultSet1.getInt(1),
+									gc.resultSet1.getString(2), gc.resultSet1.getInt(3),
+									gc.resultSet1.getInt(4), Integer.parseInt(tt[i]
 											.toString())));
 
 							myMap.put(Integer.parseInt(tt[i].toString()), mo);
@@ -437,8 +437,8 @@ public class UniformDAO {
 					} finally{
 
 						try {
-							if(gc.rs1 != null)	gc.rs1.close();
-							if(gc.ps1 !=null) gc.ps1.close();
+							if(gc.resultSet1 != null)	gc.resultSet1.close();
+							if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 							GetConnection.getMySQLConnection().close();
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -462,21 +462,21 @@ public class UniformDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, auId);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, auId);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next())
-				return gc.rs1.getString(1);
+			if (gc.resultSet1.next())
+				return gc.resultSet1.getString(1);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -493,21 +493,21 @@ public class UniformDAO {
 			GetConnection gc = new GetConnection();
 
 			try {
-				gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-				gc.ps1.setInt(1, unId);
+				gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+				gc.preparedStatement1.setInt(1, unId);
 
-				gc.rs1 = gc.ps1.executeQuery();
+				gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-				if (gc.rs1.next())
-					return gc.rs1.getString(1);
+				if (gc.resultSet1.next())
+					return gc.resultSet1.getString(1);
 
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally{
 
 				try {
-					if(gc.rs1 != null)	gc.rs1.close();
-					if(gc.ps1 !=null) gc.ps1.close();
+					if(gc.resultSet1 != null)	gc.resultSet1.close();
+					if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 					GetConnection.getMySQLConnection().close();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -528,21 +528,21 @@ public class UniformDAO {
 			GetConnection gc = new GetConnection();
 
 			try {
-				gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-				gc.ps1.setInt(1, auId);
+				gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+				gc.preparedStatement1.setInt(1, auId);
 
-				gc.rs1 = gc.ps1.executeQuery();
+				gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-				if (gc.rs1.next())
-					return gc.rs1.getString(1);
+				if (gc.resultSet1.next())
+					return gc.resultSet1.getString(1);
 
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally{
 
 				try {
-					if(gc.rs1 != null)	gc.rs1.close();
-					if(gc.ps1 !=null) gc.ps1.close();
+					if(gc.resultSet1 != null)	gc.resultSet1.close();
+					if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 					GetConnection.getMySQLConnection().close();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -578,25 +578,25 @@ public class UniformDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, class1);
-			gc.ps1.setString(2, usn);
-			gc.ps1.setString(3, class1);
-			gc.ps1.setInt(4, schid);
-			gc.ps1.setInt(5, schid);
-			gc.ps1.setInt(6, auId);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, class1);
+			gc.preparedStatement1.setString(2, usn);
+			gc.preparedStatement1.setString(3, class1);
+			gc.preparedStatement1.setInt(4, schid);
+			gc.preparedStatement1.setInt(5, schid);
+			gc.preparedStatement1.setInt(6, auId);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next())
-				return gc.rs1.getInt(1);
+			if (gc.resultSet1.next())
+				return gc.resultSet1.getInt(1);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -624,17 +624,17 @@ public class UniformDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, unid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, unid);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				MesurementOrderBean temp = new MesurementOrderBean();
-				temp.setmId(gc.rs1.getInt(1));
-				temp.setName(gc.rs1.getString(2));
-				temp.setmOrder(gc.rs1.getInt(3));
-				temp.setUnId(gc.rs1.getInt(4));
+				temp.setmId(gc.resultSet1.getInt(1));
+				temp.setName(gc.resultSet1.getString(2));
+				temp.setmOrder(gc.resultSet1.getInt(3));
+				temp.setUnId(gc.resultSet1.getInt(4));
 
 				mesureOrder.add(temp);
 			}
@@ -643,8 +643,8 @@ public class UniformDAO {
 		} finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -662,22 +662,22 @@ public class UniformDAO {
 		
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, auid);
-			gc.ps1.setInt(2, stid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, auid);
+			gc.preparedStatement1.setInt(2, stid);
 			//gc.ps1.setInt(3, uid);
 //			gc.ps1.setString(4, color);
 			
-			if((gc.rs1 = gc.ps1.executeQuery()).next())
-				return gc.rs1.getInt(1);
+			if((gc.resultSet1 = gc.preparedStatement1.executeQuery()).next())
+				return gc.resultSet1.getInt(1);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -695,11 +695,11 @@ public class UniformDAO {
 		
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, color);
-			gc.ps1.setInt(2, smid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, color);
+			gc.preparedStatement1.setInt(2, smid);
 			
-			return gc.ps1.executeUpdate()>0;
+			return gc.preparedStatement1.executeUpdate()>0;
 			
 			
 		} catch (SQLException e) {
@@ -708,7 +708,7 @@ public class UniformDAO {
 
 			try {
 				//if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -739,18 +739,18 @@ public class UniformDAO {
 				 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql,
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql,
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
-			gc.ps1.setInt(1, auid);
-			gc.ps1.setInt(2, stid);
-			gc.ps1.setInt(3, uid);
-			gc.ps1.setString(4, color);
+			gc.preparedStatement1.setInt(1, auid);
+			gc.preparedStatement1.setInt(2, stid);
+			gc.preparedStatement1.setInt(3, uid);
+			gc.preparedStatement1.setString(4, color);
 
-			if (gc.ps1.executeUpdate() > 0) {
-				gc.rs1 = gc.ps1.getGeneratedKeys();
-				gc.rs1.next();
-				return gc.rs1.getInt(1);
+			if (gc.preparedStatement1.executeUpdate() > 0) {
+				gc.resultSet1 = gc.preparedStatement1.getGeneratedKeys();
+				gc.resultSet1.next();
+				return gc.resultSet1.getInt(1);
 				
 			}
 			
@@ -760,8 +760,8 @@ public class UniformDAO {
 		} finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -780,20 +780,20 @@ public class UniformDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, mid);
-			gc.ps1.setInt(2, smid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, mid);
+			gc.preparedStatement1.setInt(2, smid);
 
-			if ((gc.rs1 = gc.ps1.executeQuery()).next())
-				return gc.rs1.getInt(1);
+			if ((gc.resultSet1 = gc.preparedStatement1.executeQuery()).next())
+				return gc.resultSet1.getInt(1);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -811,11 +811,11 @@ public class UniformDAO {
 		
 		
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setDouble(1, value);
-			gc.ps1.setInt(2, smdid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setDouble(1, value);
+			gc.preparedStatement1.setInt(2, smdid);
 			
-			return gc.ps1.executeUpdate()>0;
+			return gc.preparedStatement1.executeUpdate()>0;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -823,7 +823,7 @@ public class UniformDAO {
 
 			try {
 				//if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -849,19 +849,19 @@ public class UniformDAO {
 		String sql ="insert into STUDENTMESUREMENTDETAILS (mid, smid, value) values(?,?,?)";
 		
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, mid);
-			gc.ps1.setInt(2, smid);
-			gc.ps1.setDouble(3, value);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, mid);
+			gc.preparedStatement1.setInt(2, smid);
+			gc.preparedStatement1.setDouble(3, value);
 			
-			return gc.ps1.executeUpdate()>0;
+			return gc.preparedStatement1.executeUpdate()>0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 
 			try {
 				//if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -887,23 +887,23 @@ public class UniformDAO {
 		
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 			
-			gc.ps1.setInt(1, stId);
-			gc.ps1.setInt(2, auid);
-			gc.ps1.setInt(3, mid);
+			gc.preparedStatement1.setInt(1, stId);
+			gc.preparedStatement1.setInt(2, auid);
+			gc.preparedStatement1.setInt(3, mid);
 			
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 			
-			if(gc.rs1.next())
-				return gc.rs1.getDouble(1);
+			if(gc.resultSet1.next())
+				return gc.resultSet1.getDouble(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -922,23 +922,23 @@ public class UniformDAO {
 		GetConnection gc = new GetConnection();
 		
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 			
-			gc.ps1.setInt(1, auid);
-			gc.ps1.setInt(2, stId);
+			gc.preparedStatement1.setInt(1, auid);
+			gc.preparedStatement1.setInt(2, stId);
 			
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 			
-			if(gc.rs1.next())
-				return gc.rs1.getString(1);
+			if(gc.resultSet1.next())
+				return gc.resultSet1.getString(1);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 
 			try {
-				if(gc.rs1 != null)	gc.rs1.close();
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.resultSet1 != null)	gc.resultSet1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -970,20 +970,20 @@ public class UniformDAO {
 		String sql4 = "delete from assignuniform where auid = " + auid;
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1  = GetConnection.getMySQLConnection().prepareStatement(sql1);
-			gc.ps1.addBatch();
-			gc.ps1.addBatch(sql2);
-			gc.ps1.addBatch(sql3);
-			gc.ps1.addBatch(sql4);
+			gc.preparedStatement1  = GetConnection.getMySQLConnection().prepareStatement(sql1);
+			gc.preparedStatement1.addBatch();
+			gc.preparedStatement1.addBatch(sql2);
+			gc.preparedStatement1.addBatch(sql3);
+			gc.preparedStatement1.addBatch(sql4);
 
 			logger.info("Deletion request got for " + auid);
-			return gc.ps1.executeBatch().length>0;
+			return gc.preparedStatement1.executeBatch().length>0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 
 			try {
-				if(gc.ps1 !=null) gc.ps1.close();
+				if(gc.preparedStatement1 !=null) gc.preparedStatement1.close();
 				GetConnection.getMySQLConnection().close();
 			} catch (SQLException e) {
 				e.printStackTrace();

@@ -17,19 +17,19 @@ public class HouseDAO {
 		HouseBean hb = null;
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, houseId);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, houseId);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next()) {
+			if (gc.resultSet1.next()) {
 				hb = new HouseBean();
 				hb.sethId(houseId);
 
-				hb.setColor1(gc.rs1.getString(2));
-				hb.setColor2(gc.rs1.getString(3));
-				hb.setColor3(gc.rs1.getString(4));
-				hb.setColor4(gc.rs1.getString(5));
+				hb.setColor1(gc.resultSet1.getString(2));
+				hb.setColor2(gc.resultSet1.getString(3));
+				hb.setColor3(gc.resultSet1.getString(4));
+				hb.setColor4(gc.resultSet1.getString(5));
 			}
 
 		} catch (SQLException e) {
@@ -39,8 +39,8 @@ public class HouseDAO {
 		
 		finally{
 			try {
-				if(gc.rs1!=null)gc.rs1.close();
-				if(gc.ps1!=null) gc.ps1.close();
+				if(gc.resultSet1!=null)gc.resultSet1.close();
+				if(gc.preparedStatement1!=null) gc.preparedStatement1.close();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -65,19 +65,19 @@ public class HouseDAO {
 		HouseBean hb = null;
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, auId);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, auId);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next()) {
+			if (gc.resultSet1.next()) {
 				hb = new HouseBean();
-				hb.sethId(gc.rs1.getInt(1));
+				hb.sethId(gc.resultSet1.getInt(1));
 
-				hb.setColor1(gc.rs1.getString(2));
-				hb.setColor2(gc.rs1.getString(3));
-				hb.setColor3(gc.rs1.getString(4));
-				hb.setColor4(gc.rs1.getString(5));
+				hb.setColor1(gc.resultSet1.getString(2));
+				hb.setColor2(gc.resultSet1.getString(3));
+				hb.setColor3(gc.resultSet1.getString(4));
+				hb.setColor4(gc.resultSet1.getString(5));
 			}
 
 		} catch (SQLException e) {
@@ -86,8 +86,8 @@ public class HouseDAO {
 		} 
 		finally{
 			try {
-				if(gc.rs1!=null)gc.rs1.close();
-				if(gc.ps1!=null) gc.ps1.close();
+				if(gc.resultSet1!=null)gc.resultSet1.close();
+				if(gc.preparedStatement1!=null) gc.preparedStatement1.close();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();

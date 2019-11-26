@@ -19,18 +19,18 @@ public class StudentDAO {
 		GetConnection gc = new GetConnection();
 		String sql = "insert into student (usn,name,sex,class,section,parentname,mobile,email,schid,uid) values (?,?,?,?,?,?,?,?,?,?)";
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, studb.getStudUSN().toUpperCase());
-			gc.ps1.setString(2, studb.getStudName().toUpperCase());
-			gc.ps1.setString(3, studb.getStudSex().toUpperCase());
-			gc.ps1.setString(4, studb.getStudClass());
-			gc.ps1.setString(5, studb.getStudSection().toUpperCase());
-			gc.ps1.setString(6, studb.getStudParent().toUpperCase());
-			gc.ps1.setString(7, studb.getStudParentMob());
-			gc.ps1.setString(8, studb.getStudParentEmail());
-			gc.ps1.setInt(9, studb.getStudSchoolId());
-			gc.ps1.setInt(10, userId);
-			return gc.ps1.executeUpdate() > 0;
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, studb.getStudUSN().toUpperCase());
+			gc.preparedStatement1.setString(2, studb.getStudName().toUpperCase());
+			gc.preparedStatement1.setString(3, studb.getStudSex().toUpperCase());
+			gc.preparedStatement1.setString(4, studb.getStudClass());
+			gc.preparedStatement1.setString(5, studb.getStudSection().toUpperCase());
+			gc.preparedStatement1.setString(6, studb.getStudParent().toUpperCase());
+			gc.preparedStatement1.setString(7, studb.getStudParentMob());
+			gc.preparedStatement1.setString(8, studb.getStudParentEmail());
+			gc.preparedStatement1.setInt(9, studb.getStudSchoolId());
+			gc.preparedStatement1.setInt(10, userId);
+			return gc.preparedStatement1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -38,8 +38,8 @@ public class StudentDAO {
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -56,19 +56,19 @@ public class StudentDAO {
 		GetConnection gc = new GetConnection();
 		String sql = "update student set usn=?,name=?,sex=?,class=?,section=?,parentname=?,mobile=?,email=?,schid=?,uid=? where stid=?";
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, studb.getStudUSN().toUpperCase());
-			gc.ps1.setString(2, studb.getStudName().toUpperCase());
-			gc.ps1.setString(3, studb.getStudSex().toUpperCase());
-			gc.ps1.setString(4, studb.getStudClass());
-			gc.ps1.setString(5, studb.getStudSection().toUpperCase());
-			gc.ps1.setString(6, studb.getStudParent().toUpperCase());
-			gc.ps1.setString(7, studb.getStudParentMob());
-			gc.ps1.setString(8, studb.getStudParentEmail());
-			gc.ps1.setInt(9, studb.getStudSchoolId());
-			gc.ps1.setInt(10, userId);
-			gc.ps1.setInt(11, studb.getStudId());
-			return gc.ps1.executeUpdate() > 0;
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, studb.getStudUSN().toUpperCase());
+			gc.preparedStatement1.setString(2, studb.getStudName().toUpperCase());
+			gc.preparedStatement1.setString(3, studb.getStudSex().toUpperCase());
+			gc.preparedStatement1.setString(4, studb.getStudClass());
+			gc.preparedStatement1.setString(5, studb.getStudSection().toUpperCase());
+			gc.preparedStatement1.setString(6, studb.getStudParent().toUpperCase());
+			gc.preparedStatement1.setString(7, studb.getStudParentMob());
+			gc.preparedStatement1.setString(8, studb.getStudParentEmail());
+			gc.preparedStatement1.setInt(9, studb.getStudSchoolId());
+			gc.preparedStatement1.setInt(10, userId);
+			gc.preparedStatement1.setInt(11, studb.getStudId());
+			return gc.preparedStatement1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -76,8 +76,8 @@ public class StudentDAO {
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -94,21 +94,21 @@ public class StudentDAO {
 		GetConnection gc = new GetConnection();
 		String sql = "update student set parentname=?,mobile=?,email=?,uid=? where stid=?";
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, parent);
-			gc.ps1.setString(2, mob);
-			gc.ps1.setString(3, email);
-			gc.ps1.setInt(4, uid);
-			gc.ps1.setInt(5, stid);
-			return gc.ps1.executeUpdate() > 0;
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, parent);
+			gc.preparedStatement1.setString(2, mob);
+			gc.preparedStatement1.setString(3, email);
+			gc.preparedStatement1.setInt(4, uid);
+			gc.preparedStatement1.setInt(5, stid);
+			return gc.preparedStatement1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -129,23 +129,23 @@ public class StudentDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean temp = new StudentBean();
-				temp.setStudId(gc.rs1.getInt(1));
-				temp.setStudUSN(gc.rs1.getString(2));
-				temp.setStudName(gc.rs1.getString(3));
-				temp.setStudSex(gc.rs1.getString(4));
-				temp.setStudClass(gc.rs1.getString(5));
-				temp.setStudSection(gc.rs1.getString(6));
-				temp.setStudParent(gc.rs1.getString(7));
-				temp.setStudParentMob(gc.rs1.getString(8));
-				temp.setStudParentEmail(gc.rs1.getString(9));
-				temp.setStudUID(gc.rs1.getInt(10));
-				temp.setStudSchoolId(gc.rs1.getInt(11));
-				temp.setStudStatus(gc.rs1.getString(12));
+				temp.setStudId(gc.resultSet1.getInt(1));
+				temp.setStudUSN(gc.resultSet1.getString(2));
+				temp.setStudName(gc.resultSet1.getString(3));
+				temp.setStudSex(gc.resultSet1.getString(4));
+				temp.setStudClass(gc.resultSet1.getString(5));
+				temp.setStudSection(gc.resultSet1.getString(6));
+				temp.setStudParent(gc.resultSet1.getString(7));
+				temp.setStudParentMob(gc.resultSet1.getString(8));
+				temp.setStudParentEmail(gc.resultSet1.getString(9));
+				temp.setStudUID(gc.resultSet1.getInt(10));
+				temp.setStudSchoolId(gc.resultSet1.getInt(11));
+				temp.setStudStatus(gc.resultSet1.getString(12));
 
 				studentList.add(temp);
 			}
@@ -156,10 +156,10 @@ public class StudentDAO {
 
 		finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -181,26 +181,26 @@ public class StudentDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, shcoolId);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, shcoolId);
 			// gc.ps1.setString(2, studentName);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean temp = new StudentBean();
-				temp.setStudId(gc.rs1.getInt(1));
-				temp.setStudUSN(gc.rs1.getString(2));
-				temp.setStudName(gc.rs1.getString(3));
-				temp.setStudSex(gc.rs1.getString(4));
-				temp.setStudClass(gc.rs1.getString(5));
-				temp.setStudSection(gc.rs1.getString(6));
-				temp.setStudParent(gc.rs1.getString(7));
-				temp.setStudParentMob(gc.rs1.getString(8));
-				temp.setStudParentEmail(gc.rs1.getString(9));
-				temp.setStudUID(gc.rs1.getInt(10));
-				temp.setStudSchoolId(gc.rs1.getInt(11));
-				temp.setStudStatus(gc.rs1.getString(12));
+				temp.setStudId(gc.resultSet1.getInt(1));
+				temp.setStudUSN(gc.resultSet1.getString(2));
+				temp.setStudName(gc.resultSet1.getString(3));
+				temp.setStudSex(gc.resultSet1.getString(4));
+				temp.setStudClass(gc.resultSet1.getString(5));
+				temp.setStudSection(gc.resultSet1.getString(6));
+				temp.setStudParent(gc.resultSet1.getString(7));
+				temp.setStudParentMob(gc.resultSet1.getString(8));
+				temp.setStudParentEmail(gc.resultSet1.getString(9));
+				temp.setStudUID(gc.resultSet1.getInt(10));
+				temp.setStudSchoolId(gc.resultSet1.getInt(11));
+				temp.setStudStatus(gc.resultSet1.getString(12));
 
 				studentList.add(temp);
 			}
@@ -211,10 +211,10 @@ public class StudentDAO {
 
 		finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -259,20 +259,20 @@ public class StudentDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, class1);
-			gc.ps1.setString(2, usn);
-			gc.ps1.setString(3, class1);
-			gc.ps1.setInt(4, schid);
-			gc.ps1.setInt(5, schid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, class1);
+			gc.preparedStatement1.setString(2, usn);
+			gc.preparedStatement1.setString(3, class1);
+			gc.preparedStatement1.setInt(4, schid);
+			gc.preparedStatement1.setInt(5, schid);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				ArrayList<Object> temp = new ArrayList<Object>();
-				temp.add(gc.rs1.getString(1));
-				temp.add(gc.rs1.getString(2));
-				temp.add(gc.rs1.getString(3));
+				temp.add(gc.resultSet1.getString(1));
+				temp.add(gc.resultSet1.getString(2));
+				temp.add(gc.resultSet1.getString(3));
 
 				myList.add(temp);
 			}
@@ -280,10 +280,10 @@ public class StudentDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -322,20 +322,20 @@ public class StudentDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, class1);
-			gc.ps1.setString(2, usn);
-			gc.ps1.setString(3, class1);
-			gc.ps1.setInt(4, schid);
-			gc.ps1.setInt(5, schid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, class1);
+			gc.preparedStatement1.setString(2, usn);
+			gc.preparedStatement1.setString(3, class1);
+			gc.preparedStatement1.setInt(4, schid);
+			gc.preparedStatement1.setInt(5, schid);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				ArrayList<Object> temp = new ArrayList<Object>();
-				temp.add(gc.rs1.getString(1));
-				temp.add(gc.rs1.getString(2));
-				temp.add(gc.rs1.getString(3));
+				temp.add(gc.resultSet1.getString(1));
+				temp.add(gc.resultSet1.getString(2));
+				temp.add(gc.resultSet1.getString(3));
 
 				myList.add(temp);
 			}
@@ -343,10 +343,10 @@ public class StudentDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -368,23 +368,23 @@ public class StudentDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, usn);
-			gc.ps1.setString(2, class1);
-			gc.ps1.setInt(3, schoolid);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, usn);
+			gc.preparedStatement1.setString(2, class1);
+			gc.preparedStatement1.setInt(3, schoolid);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next())
-				return gc.rs1.getInt(1);
+			if (gc.resultSet1.next())
+				return gc.resultSet1.getInt(1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -405,25 +405,25 @@ public class StudentDAO {
 		GetConnection gc = new GetConnection();
 		List<StudentBean> list = new Vector<StudentBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setString(2, cls);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setString(2, cls);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudName(gc.rs1.getString(2));
-				sb.setStudParent(gc.rs1.getString(3));
-				sb.setStudSex(gc.rs1.getString(4));
-				sb.setStudClass(gc.rs1.getString(5));
-				sb.setStudSection(gc.rs1.getString(6));
-				sb.setStudParentMob(gc.rs1.getString(7));
-				sb.setStudParentEmail(gc.rs1.getString(8));
-				sb.setStudUID(gc.rs1.getInt(9));
-				sb.setStudSchoolId(gc.rs1.getInt(10));
-				sb.setStudUSN(gc.rs1.getString(11));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudName(gc.resultSet1.getString(2));
+				sb.setStudParent(gc.resultSet1.getString(3));
+				sb.setStudSex(gc.resultSet1.getString(4));
+				sb.setStudClass(gc.resultSet1.getString(5));
+				sb.setStudSection(gc.resultSet1.getString(6));
+				sb.setStudParentMob(gc.resultSet1.getString(7));
+				sb.setStudParentEmail(gc.resultSet1.getString(8));
+				sb.setStudUID(gc.resultSet1.getInt(9));
+				sb.setStudSchoolId(gc.resultSet1.getInt(10));
+				sb.setStudUSN(gc.resultSet1.getString(11));
 
 				list.add(sb);
 
@@ -433,10 +433,10 @@ public class StudentDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -463,25 +463,25 @@ public class StudentDAO {
 		GetConnection gc = new GetConnection();
 		List<StudentBean> list = new Vector<StudentBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setString(2, cls);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setString(2, cls);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudName(gc.rs1.getString(2));
-				sb.setStudParent(gc.rs1.getString(3));
-				sb.setStudSex(gc.rs1.getString(4));
-				sb.setStudClass(gc.rs1.getString(5));
-				sb.setStudSection(gc.rs1.getString(6));
-				sb.setStudParentMob(gc.rs1.getString(7));
-				sb.setStudParentEmail(gc.rs1.getString(8));
-				sb.setStudUID(gc.rs1.getInt(9));
-				sb.setStudSchoolId(gc.rs1.getInt(10));
-				sb.setStudUSN(gc.rs1.getString(11));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudName(gc.resultSet1.getString(2));
+				sb.setStudParent(gc.resultSet1.getString(3));
+				sb.setStudSex(gc.resultSet1.getString(4));
+				sb.setStudClass(gc.resultSet1.getString(5));
+				sb.setStudSection(gc.resultSet1.getString(6));
+				sb.setStudParentMob(gc.resultSet1.getString(7));
+				sb.setStudParentEmail(gc.resultSet1.getString(8));
+				sb.setStudUID(gc.resultSet1.getInt(9));
+				sb.setStudSchoolId(gc.resultSet1.getInt(10));
+				sb.setStudUSN(gc.resultSet1.getString(11));
 
 				list.add(sb);
 
@@ -492,10 +492,10 @@ public class StudentDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -520,24 +520,24 @@ public class StudentDAO {
 		StudentBean sb = null;
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, usn);
-			gc.ps1.setString(2, class1);
-			gc.ps1.setInt(3, schid);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, usn);
+			gc.preparedStatement1.setString(2, class1);
+			gc.preparedStatement1.setInt(3, schid);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next()) {
+			if (gc.resultSet1.next()) {
 
 				sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudName(gc.rs1.getString(2));
-				sb.setStudSex(gc.rs1.getString(3));
-				sb.setStudClass(gc.rs1.getString(4));
-				sb.setStudSection(gc.rs1.getString(5));
-				sb.setStudParent(gc.rs1.getString(6));
-				sb.setStudParentMob(gc.rs1.getString(7));
-				sb.setStudParentEmail(gc.rs1.getString(8));
-				sb.setMeasurementDate(gc.rs1.getString(9));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudName(gc.resultSet1.getString(2));
+				sb.setStudSex(gc.resultSet1.getString(3));
+				sb.setStudClass(gc.resultSet1.getString(4));
+				sb.setStudSection(gc.resultSet1.getString(5));
+				sb.setStudParent(gc.resultSet1.getString(6));
+				sb.setStudParentMob(gc.resultSet1.getString(7));
+				sb.setStudParentEmail(gc.resultSet1.getString(8));
+				sb.setMeasurementDate(gc.resultSet1.getString(9));
 				return sb;
 			}
 
@@ -545,10 +545,10 @@ public class StudentDAO {
 			sqle.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -582,22 +582,22 @@ public class StudentDAO {
 		StudentBean sb = null;
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, orderId);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, orderId);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next()) {
+			if (gc.resultSet1.next()) {
 
 				sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudName(gc.rs1.getString(2));
-				sb.setStudSex(gc.rs1.getString(3));
-				sb.setStudClass(gc.rs1.getString(4));
-				sb.setStudSection(gc.rs1.getString(5));
-				sb.setStudParent(gc.rs1.getString(6));
-				sb.setStudParentMob(gc.rs1.getString(7));
-				sb.setStudParentEmail(gc.rs1.getString(8));
-				sb.setMeasurementDate(gc.rs1.getString(9));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudName(gc.resultSet1.getString(2));
+				sb.setStudSex(gc.resultSet1.getString(3));
+				sb.setStudClass(gc.resultSet1.getString(4));
+				sb.setStudSection(gc.resultSet1.getString(5));
+				sb.setStudParent(gc.resultSet1.getString(6));
+				sb.setStudParentMob(gc.resultSet1.getString(7));
+				sb.setStudParentEmail(gc.resultSet1.getString(8));
+				sb.setMeasurementDate(gc.resultSet1.getString(9));
 				return sb;
 			}
 
@@ -605,10 +605,10 @@ public class StudentDAO {
 			sqle.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -631,20 +631,20 @@ public class StudentDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, studentId);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, studentId);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next())
-				return gc.rs1.getInt(1);
+			if (gc.resultSet1.next())
+				return gc.resultSet1.getInt(1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -666,20 +666,20 @@ public class StudentDAO {
 		GetConnection gc = new GetConnection();
 		List<StudentBean> list = new Vector<StudentBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setString(2, cls);
-			gc.ps1.setString(3, sdate);
-			gc.ps1.setString(4, edate);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setString(2, cls);
+			gc.preparedStatement1.setString(3, sdate);
+			gc.preparedStatement1.setString(4, edate);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudUSN(gc.rs1.getString(2));
-				sb.setStudName(gc.rs1.getString(3));
-				sb.setStudSex(gc.rs1.getString(4));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudUSN(gc.resultSet1.getString(2));
+				sb.setStudName(gc.resultSet1.getString(3));
+				sb.setStudSex(gc.resultSet1.getString(4));
 
 				list.add(sb);
 
@@ -690,10 +690,10 @@ public class StudentDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -727,22 +727,22 @@ String sql1 = "select st.stid,st.usn,st.name,st.sex from student st,studentorder
 		GetConnection gc = new GetConnection();
 		List<StudentBean> list = new Vector<StudentBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setString(2, cls);
-			gc.ps1.setString(3, sdate);
-			gc.ps1.setString(4, edate);
-			gc.ps1.setString(5, sex);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setString(2, cls);
+			gc.preparedStatement1.setString(3, sdate);
+			gc.preparedStatement1.setString(4, edate);
+			gc.preparedStatement1.setString(5, sex);
 			
 			
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudUSN(gc.rs1.getString(2));
-				sb.setStudName(gc.rs1.getString(3));
-				sb.setStudSex(gc.rs1.getString(4));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudUSN(gc.resultSet1.getString(2));
+				sb.setStudName(gc.resultSet1.getString(3));
+				sb.setStudSex(gc.resultSet1.getString(4));
 
 				list.add(sb);
 
@@ -753,10 +753,10 @@ String sql1 = "select st.stid,st.usn,st.name,st.sex from student st,studentorder
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -802,23 +802,23 @@ String sql1 = "select st.stid,st.usn,st.name,st.sex from student st,studentorder
 		GetConnection gc = new GetConnection();
 		List<StudentBean> list = new Vector<StudentBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setInt(2, unid);
-			gc.ps1.setString(3, sdate);
-			gc.ps1.setString(4, edate);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setInt(2, unid);
+			gc.preparedStatement1.setString(3, sdate);
+			gc.preparedStatement1.setString(4, edate);
 
 			// 	gc.ps1 = GetConnection.getMySQLConnection().prepareStatement("set global max_connections = 700");
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudUSN(gc.rs1.getString(2));
-				sb.setStudName(gc.rs1.getString(3));
-				sb.setStudSex(gc.rs1.getString(4));
-				sb.setOrderId(gc.rs1.getString(5));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudUSN(gc.resultSet1.getString(2));
+				sb.setStudName(gc.resultSet1.getString(3));
+				sb.setStudSex(gc.resultSet1.getString(4));
+				sb.setOrderId(gc.resultSet1.getString(5));
 				list.add(sb);
 			}
 
@@ -826,10 +826,10 @@ String sql1 = "select st.stid,st.usn,st.name,st.sex from student st,studentorder
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -859,22 +859,22 @@ String sql1 = "select st.stid,st.usn,st.name,st.sex from student st,studentorder
 		GetConnection gc = new GetConnection();
 		List<StudentBean> list = new Vector<StudentBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setInt(2, unid);
-			gc.ps1.setString(3, sdate);
-			gc.ps1.setString(4, edate);
-			gc.ps1.setString(5, cls);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setInt(2, unid);
+			gc.preparedStatement1.setString(3, sdate);
+			gc.preparedStatement1.setString(4, edate);
+			gc.preparedStatement1.setString(5, cls);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudUSN(gc.rs1.getString(2));
-				sb.setStudName(gc.rs1.getString(3));
-				sb.setStudSex(gc.rs1.getString(4));
-				sb.setOrderId(gc.rs1.getString(5));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudUSN(gc.resultSet1.getString(2));
+				sb.setStudName(gc.resultSet1.getString(3));
+				sb.setStudSex(gc.resultSet1.getString(4));
+				sb.setOrderId(gc.resultSet1.getString(5));
 				list.add(sb);
 			}
 
@@ -882,10 +882,10 @@ String sql1 = "select st.stid,st.usn,st.name,st.sex from student st,studentorder
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -983,18 +983,18 @@ String sql1 = "select st.stid,st.usn,st.name,st.sex from student st,studentorder
 		try {
 			String sql = "update student set MEASUREMENTDATE= now() where stid=?";
 
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, studentId);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, studentId);
 
-			return gc.ps1.executeUpdate() > 0;
+			return gc.preparedStatement1.executeUpdate() > 0;
 
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} finally {
 			try {
 
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -1019,21 +1019,21 @@ String sql1 = "select st.stid,st.usn,st.name,st.sex from student st,studentorder
 
 		try {
 			// delete invoice
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(
 					"delete from studentinvoice where oid in (select oid from studentorder where stid='" + studentId
 							+ "')");
-			gc.ps1.addBatch();
+			gc.preparedStatement1.addBatch();
 
-			gc.ps1.addBatch("delete from orderdetail where oid in (select oid from studentorder where stid='"
+			gc.preparedStatement1.addBatch("delete from orderdetail where oid in (select oid from studentorder where stid='"
 					+ studentId + "')");
-			gc.ps1.addBatch("delete from studentorder where stid ='" + studentId + "'");
-			gc.ps1.addBatch(
+			gc.preparedStatement1.addBatch("delete from studentorder where stid ='" + studentId + "'");
+			gc.preparedStatement1.addBatch(
 					"delete from studentmesurementdetails where smid in (select smid from studentmesurement where stid = '"
 							+ studentId + "')");
-			gc.ps1.addBatch("delete from studentmesurement where stid = '" + studentId + "'");
-			gc.ps1.addBatch("DELETE FROM STUDENT WHERE STID='" + studentId + "'");
+			gc.preparedStatement1.addBatch("delete from studentmesurement where stid = '" + studentId + "'");
+			gc.preparedStatement1.addBatch("DELETE FROM STUDENT WHERE STID='" + studentId + "'");
 
-			return gc.ps1.executeBatch().length > 0;
+			return gc.preparedStatement1.executeBatch().length > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

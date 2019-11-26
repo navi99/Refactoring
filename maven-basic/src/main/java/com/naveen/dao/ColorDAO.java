@@ -18,13 +18,13 @@ public class ColorDAO {
 			String sql="insert into house (color1,color2,color3,color4,uid) values (?,?,?,?,?)";
 			
 			try {
-				gc.ps1=GetConnection.getMySQLConnection().prepareStatement(sql);
-				gc.ps1.setString(1, c1);
-				gc.ps1.setString(2, c2);
-				gc.ps1.setString(3, c3);
-				gc.ps1.setString(4, c4);
-				gc.ps1.setInt(5, userId);
-				return gc.ps1.executeUpdate()>0;
+				gc.preparedStatement1=GetConnection.getMySQLConnection().prepareStatement(sql);
+				gc.preparedStatement1.setString(1, c1);
+				gc.preparedStatement1.setString(2, c2);
+				gc.preparedStatement1.setString(3, c3);
+				gc.preparedStatement1.setString(4, c4);
+				gc.preparedStatement1.setInt(5, userId);
+				return gc.preparedStatement1.executeUpdate()>0;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -32,7 +32,7 @@ public class ColorDAO {
 			finally{
 				try {
 					//if(gc.rs1!=null)gc.rs1.close();
-					if(gc.ps1!=null) gc.ps1.close();
+					if(gc.preparedStatement1!=null) gc.preparedStatement1.close();
 					
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -52,12 +52,12 @@ public class ColorDAO {
 			
 			GetConnection gc = new GetConnection();
 			try {
-				gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-				gc.rs1 = gc.ps1.executeQuery();
+				gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+				gc.resultSet1 = gc.preparedStatement1.executeQuery();
 				
-				while(gc.rs1.next()){
+				while(gc.resultSet1.next()){
 					ColorBean temp = new ColorBean();
-					temp.setColorName(gc.rs1.getString(1));
+					temp.setColorName(gc.resultSet1.getString(1));
 					colors.add(temp);
 				}
 				
@@ -67,8 +67,8 @@ public class ColorDAO {
 			}
 			finally{
 				try {
-					if(gc.rs1!=null)gc.rs1.close();
-					if(gc.ps1!=null) gc.ps1.close();
+					if(gc.resultSet1!=null)gc.resultSet1.close();
+					if(gc.preparedStatement1!=null) gc.preparedStatement1.close();
 					
 				} catch (SQLException e) {
 					e.printStackTrace();

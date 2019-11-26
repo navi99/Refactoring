@@ -382,19 +382,19 @@ public class TailorDAO {
 
 		String sql = "drop table IF EXISTS tmp_report1";
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 
-			gc.ps1.addBatch();
+			gc.preparedStatement1.addBatch();
 
 			sql = "drop table IF EXISTS tailor_report1";
-			gc.ps1.addBatch(sql);
+			gc.preparedStatement1.addBatch(sql);
 			sql = "drop table IF EXISTS TMP_REPORT_ORD";
-			gc.ps1.addBatch(sql);
+			gc.preparedStatement1.addBatch(sql);
 
 			sql = "drop table IF EXISTS TAILOR_REPORT_ORD";
-			gc.ps1.addBatch(sql);
+			gc.preparedStatement1.addBatch(sql);
 
-			int count = gc.ps1.executeBatch().length;
+			int count = gc.preparedStatement1.executeBatch().length;
 			return count > 0;
 
 		} catch (SQLException e) {
@@ -434,11 +434,11 @@ public class TailorDAO {
 				logger.info("Uniform has Color");
 				try {
 					String sql = "select * from tailor_report1";
-					gc.ps1 = GetConnection.getMySQLConnection()
+					gc.preparedStatement1 = GetConnection.getMySQLConnection()
 							.prepareStatement(sql);
 
-					gc.rs1 = gc.ps1.executeQuery();
-					gc.rsmd = gc.rs1.getMetaData();
+					gc.resultSet1 = gc.preparedStatement1.executeQuery();
+					gc.rsmd = gc.resultSet1.getMetaData();
 
 					int columnCount = gc.rsmd.getColumnCount();
 
@@ -518,11 +518,11 @@ public class TailorDAO {
 						// System.out.println("no of uniforms is <=3");
 
 						String sql = "select * from tailor_report1";
-						gc.ps1 = GetConnection.getMySQLConnection()
+						gc.preparedStatement1 = GetConnection.getMySQLConnection()
 								.prepareStatement(sql);
 
-						gc.rs1 = gc.ps1.executeQuery();
-						gc.rsmd = gc.rs1.getMetaData();
+						gc.resultSet1 = gc.preparedStatement1.executeQuery();
+						gc.rsmd = gc.resultSet1.getMetaData();
 
 						int columnCount = gc.rsmd.getColumnCount();
 
@@ -612,19 +612,19 @@ public class TailorDAO {
 						return myList;
 					} else if (noOfUniforms > 3) {
 						String sql = "select * from tailor_report_ord";
-						gc.ps1 = GetConnection.getMySQLConnection()
+						gc.preparedStatement1 = GetConnection.getMySQLConnection()
 								.prepareStatement(sql);
 
-						gc.rs1 = gc.ps1.executeQuery();
-						gc.rsmd = gc.rs1.getMetaData();
+						gc.resultSet1 = gc.preparedStatement1.executeQuery();
+						gc.rsmd = gc.resultSet1.getMetaData();
 
 						int columnCount = gc.rsmd.getColumnCount();
 
-						while (gc.rs1.next()) {
+						while (gc.resultSet1.next()) {
 							ArrayList<String> tempList = new ArrayList<String>();
 							for (int i = 1; i < columnCount; i++) {
 
-								tempList.add(gc.rs1.getString(i));
+								tempList.add(gc.resultSet1.getString(i));
 							}
 							myList.add(tempList);
 						}
@@ -681,11 +681,11 @@ public class TailorDAO {
 				logger.info("Uniform has Color");
 				try {
 					String sql = "select * from tailor_report1";
-					gc.ps1 = GetConnection.getMySQLConnection()
+					gc.preparedStatement1 = GetConnection.getMySQLConnection()
 							.prepareStatement(sql);
 
-					gc.rs1 = gc.ps1.executeQuery();
-					gc.rsmd = gc.rs1.getMetaData();
+					gc.resultSet1 = gc.preparedStatement1.executeQuery();
+					gc.rsmd = gc.resultSet1.getMetaData();
 
 					int columnCount = gc.rsmd.getColumnCount();
 
@@ -765,11 +765,11 @@ public class TailorDAO {
 						// System.out.println("no of uniforms is <=3");
 
 						String sql = "select * from tailor_report1";
-						gc.ps1 = GetConnection.getMySQLConnection()
+						gc.preparedStatement1 = GetConnection.getMySQLConnection()
 								.prepareStatement(sql);
 
-						gc.rs1 = gc.ps1.executeQuery();
-						gc.rsmd = gc.rs1.getMetaData();
+						gc.resultSet1 = gc.preparedStatement1.executeQuery();
+						gc.rsmd = gc.resultSet1.getMetaData();
 
 						int columnCount = gc.rsmd.getColumnCount();
 
@@ -859,19 +859,19 @@ public class TailorDAO {
 						return myList;
 					} else if (noOfUniforms > 3) {
 						String sql = "select * from tailor_report_ord";
-						gc.ps1 = GetConnection.getMySQLConnection()
+						gc.preparedStatement1 = GetConnection.getMySQLConnection()
 								.prepareStatement(sql);
 
-						gc.rs1 = gc.ps1.executeQuery();
-						gc.rsmd = gc.rs1.getMetaData();
+						gc.resultSet1 = gc.preparedStatement1.executeQuery();
+						gc.rsmd = gc.resultSet1.getMetaData();
 
 						int columnCount = gc.rsmd.getColumnCount();
 
-						while (gc.rs1.next()) {
+						while (gc.resultSet1.next()) {
 							ArrayList<String> tempList = new ArrayList<String>();
 							for (int i = 1; i < columnCount; i++) {
 
-								tempList.add(gc.rs1.getString(i));
+								tempList.add(gc.resultSet1.getString(i));
 							}
 							myList.add(tempList);
 						}
@@ -977,11 +977,11 @@ public class TailorDAO {
 
 			logger.debug(sql.toString().replace('\'', ' '));
 
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			if (gc.rs1.next()) {
-				return gc.rs1.getInt(1) > 0;
+			if (gc.resultSet1.next()) {
+				return gc.resultSet1.getInt(1) > 0;
 			}
 
 		} catch (SQLException e) {
@@ -1039,13 +1039,13 @@ public class TailorDAO {
 
 		try {
 			GetConnection gc = new GetConnection();
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, uniformId);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, uniformId);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			gc.rs1.next();
-			return gc.rs1.getInt(1);
+			gc.resultSet1.next();
+			return gc.resultSet1.getInt(1);
 
 		} catch (SQLException e) {
 			logger.error(e);
@@ -1089,25 +1089,25 @@ public class TailorDAO {
 
 		if (!checkToInsertIntoTmp_report1(uniformId)) {
 			try {
-				gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(
+				gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(
 						sql);
-				gc.rs1 = gc.ps1.executeQuery();
+				gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-				while (gc.rs1.next()) {
+				while (gc.resultSet1.next()) {
 					String sql1 = "select count(name) from tmp_report1 where smid = ?";
 					GetConnection gc1 = new GetConnection();
 
-					gc1.ps1 = GetConnection.getMySQLConnection()
+					gc1.preparedStatement1 = GetConnection.getMySQLConnection()
 							.prepareStatement(sql1);
-					gc1.ps1.setInt(1, gc.rs1.getInt(1));
-					gc1.rs1 = gc1.ps1.executeQuery();
+					gc1.preparedStatement1.setInt(1, gc.resultSet1.getInt(1));
+					gc1.resultSet1 = gc1.preparedStatement1.executeQuery();
 
-					gc1.rs1.next();
+					gc1.resultSet1.next();
 
 					// System.out.println("no of uniforms " + gc1.rs1.getInt(1)
 					// +" for smid is  " + gc.rs1.getInt(1));
 
-					if (gc1.rs1.getInt(1) != noOfUniforms) {
+					if (gc1.resultSet1.getInt(1) != noOfUniforms) {
 
 						for (String uniName : uniformNames) {
 							// checking to insert a record or not, if record is
@@ -1117,7 +1117,7 @@ public class TailorDAO {
 							String insertSQL = "select count(*) from tmp_report1 where smid = ? and name = ?";
 							gc1.ps3 = GetConnection.getMySQLConnection()
 									.prepareStatement(insertSQL);
-							gc1.ps3.setInt(1, gc.rs1.getInt(1));
+							gc1.ps3.setInt(1, gc.resultSet1.getInt(1));
 							gc1.ps3.setString(2, uniName);
 
 							gc1.rs3 = gc1.ps3.executeQuery();
@@ -1135,18 +1135,18 @@ public class TailorDAO {
 									String storeTmpRptSQL = "insert into tmp_report1 values(?,?,?,?)";
 
 									gc2 = new GetConnection();
-									gc2.ps1 = GetConnection
+									gc2.preparedStatement1 = GetConnection
 											.getMySQLConnection()
 											.prepareStatement(storeTmpRptSQL);
-									gc2.ps1.setDouble(1, 0.1);
-									gc2.ps1.setString(2, uniName);
-									gc2.ps1.setInt(3, gc.rs1.getInt(1));
-									gc2.ps1.setInt(4,
-											getQtyUsingSMID(gc.rs1.getInt(1)));
+									gc2.preparedStatement1.setDouble(1, 0.1);
+									gc2.preparedStatement1.setString(2, uniName);
+									gc2.preparedStatement1.setInt(3, gc.resultSet1.getInt(1));
+									gc2.preparedStatement1.setInt(4,
+											getQtyUsingSMID(gc.resultSet1.getInt(1)));
 
 									// System.out.println("qty for update is " +
 									// getQtyUsingSMID(gc.rs1.getInt(1)));
-									gc2.ps1.executeUpdate();
+									gc2.preparedStatement1.executeUpdate();
 								} catch (SQLException sqle) {
 									logger.info(sqle);
 								} finally {
@@ -1163,10 +1163,10 @@ public class TailorDAO {
 			} finally {
 
 				try {
-					if (gc.rs1 != null)
-						gc.rs1.close();
-					if (gc.ps1 != null)
-						gc.ps1.close();
+					if (gc.resultSet1 != null)
+						gc.resultSet1.close();
+					if (gc.preparedStatement1 != null)
+						gc.preparedStatement1.close();
 					GetConnection.getMySQLConnection().close();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -1184,23 +1184,23 @@ public class TailorDAO {
 		String sql = "select qty from tmp_report1 where smid = ?";
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, smid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, smid);
 
-			gc.rs1 = gc.ps1.executeQuery();
-			gc.rs1.next();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
+			gc.resultSet1.next();
 
-			return gc.rs1.getInt(1);
+			return gc.resultSet1.getInt(1);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null) {
-					gc.rs1.close();
+				if (gc.resultSet1 != null) {
+					gc.resultSet1.close();
 				}
-				if (gc.ps1 != null) {
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null) {
+					gc.preparedStatement1.close();
 				}
 				GetConnection.closeConnection();
 			} catch (SQLException e) {
@@ -1222,32 +1222,32 @@ public class TailorDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 			gc.ps2 = GetConnection.getMySQLConnection().prepareStatement(sql1);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
 			gc.rs2 = gc.ps2.executeQuery();
 
-			gc.rs1.next();
+			gc.resultSet1.next();
 			gc.rs2.next();
 
 			// System.out.println("distinct count * no of uniforms "+
 			// gc.rs1.getInt(1)*noOfUniforms);
 			// System.out.println("no of total count in tmp_report1 " +
 			// gc.rs2.getInt(1));
-			return (gc.rs1.getInt(1) * noOfUniforms) == gc.rs2.getInt(1);
+			return (gc.resultSet1.getInt(1) * noOfUniforms) == gc.rs2.getInt(1);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 
 			try {
-				if (gc.rs1 != null) {
-					gc.rs1.close();
+				if (gc.resultSet1 != null) {
+					gc.resultSet1.close();
 				}
-				if (gc.ps1 != null) {
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null) {
+					gc.preparedStatement1.close();
 				}
 				if (gc.ps2 != null) {
 					gc.ps2.close();
@@ -1272,13 +1272,13 @@ public class TailorDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, uniformId);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, uniformId);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
-				myList.add(gc.rs1.getString(1));
+			while (gc.resultSet1.next()) {
+				myList.add(gc.resultSet1.getString(1));
 			}
 
 			return myList;
@@ -1287,11 +1287,11 @@ public class TailorDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null) {
-					gc.rs1.close();
+				if (gc.resultSet1 != null) {
+					gc.resultSet1.close();
 				}
-				if (gc.ps1 != null) {
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null) {
+					gc.preparedStatement1.close();
 				}
 				GetConnection.closeConnection();
 
@@ -1372,8 +1372,8 @@ public class TailorDAO {
 			gc = new GetConnection();
 			
 			// drop existing tables 
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
-			gc.ps1.executeUpdate();
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
+			gc.preparedStatement1.executeUpdate();
 			logger.info("Statement Execute-> " + sql1);
 			gc.ps6 = GetConnection.getMySQLConnection().prepareStatement(sql6);
 			gc.ps6.executeUpdate();
@@ -1389,11 +1389,11 @@ public class TailorDAO {
 			
 			
 			gc.ps3 = GetConnection.getMySQLConnection().prepareStatement(sql3);
-			gc.rs1 = gc.ps3.executeQuery();
+			gc.resultSet1 = gc.ps3.executeQuery();
 			
 			ArrayList<String> measurementNames = new ArrayList<String>();
-			while(gc.rs1.next()){
-				measurementNames.add(gc.rs1.getString(1));
+			while(gc.resultSet1.next()){
+				measurementNames.add(gc.resultSet1.getString(1));
 			}
 			System.out.println(measurementNames);
 			
@@ -1469,8 +1469,8 @@ public class TailorDAO {
 				if (gc.ps2 != null) {
 					gc.ps2.close();
 				}
-				if (gc.ps1 != null) {
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null) {
+					gc.preparedStatement1.close();
 				}
 				GetConnection.closeConnection();
 
@@ -1527,20 +1527,20 @@ public class TailorDAO {
 				
 				// Step1 -> Create the view 
 				
-				gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(createViewSql); 
-				gc.ps1.setInt(1, schoolId);
-				gc.ps1.setString(2, cls);
-				gc.ps1.setInt(3, uniform.getUniformId());
-				gc.ps1.setString(4, sex);
+				gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(createViewSql); 
+				gc.preparedStatement1.setInt(1, schoolId);
+				gc.preparedStatement1.setString(2, cls);
+				gc.preparedStatement1.setInt(3, uniform.getUniformId());
+				gc.preparedStatement1.setString(4, sex);
 				
-				gc.ps1.executeUpdate(); 
+				gc.preparedStatement1.executeUpdate(); 
 			
 				gc.ps2 = GetConnection.getMySQLConnection().prepareStatement(numberOfMeasurementSql);
 				gc.ps2.setInt(1, uniform.getUniformId());
-				gc.rs1 = gc.ps2.executeQuery(); 
-				gc.rs1.next(); 
+				gc.resultSet1 = gc.ps2.executeQuery(); 
+				gc.resultSet1.next(); 
 				
-				int numberOfMeasurements = gc.rs1.getInt(1);
+				int numberOfMeasurements = gc.resultSet1.getInt(1);
 			
 				// the students who has got wrong uniforms 
 				gc.ps3 = GetConnection.getMySQLConnection().prepareStatement(studentsWrongUniformSql);
@@ -1584,8 +1584,8 @@ public class TailorDAO {
 				if (gc.ps2 != null) {
 					gc.ps2.close();
 				}
-				if (gc.ps1 != null) {
-					gc.ps1.close();
+				if (gc.preparedStatement1 != null) {
+					gc.preparedStatement1.close();
 				}
 				if (gc.ps3 != null) {
 					gc.ps3.close();

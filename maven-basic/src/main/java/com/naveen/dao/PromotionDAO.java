@@ -208,29 +208,29 @@ public class PromotionDAO {
 				try {
 					gc = new GetConnection();
 
-					gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-					gc.ps1.setInt(1, temp.getStudId());
+					gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+					gc.preparedStatement1.setInt(1, temp.getStudId());
 					
-					gc.rs1 = gc.ps1.executeQuery();
+					gc.resultSet1 = gc.preparedStatement1.executeQuery();
 					
 					// System.out.println("Smid is ");
-					while(gc.rs1.next()){
+					while(gc.resultSet1.next()){
 					// 	System.out.println(gc.rs1.getInt(1) +" for the student " + temp.getStudId() +", auid "+ gc.rs1.getInt(2) +", Next Year auid " + map.get(gc.rs1.getInt(3)));
 						
 						GetConnection gc1 = null;
 						// to check only if the nextClasss map returns +ve value 
 						try{
-						if((map.get(gc.rs1.getInt(3))>0)){
+						if((map.get(gc.resultSet1.getInt(3))>0)){
 						
 						// updating smid in table studentmesurement 
 						String sql1="update studentmesurement set auid =? where smid =?";
 						
 						gc1 = new GetConnection();
-						gc1.ps1  = GetConnection.getMySQLConnection().prepareStatement(sql1);
-						gc1.ps1.setInt(1, map.get(gc.rs1.getInt(3)));
-						gc1.ps1.setInt(2, gc.rs1.getInt(1));
+						gc1.preparedStatement1  = GetConnection.getMySQLConnection().prepareStatement(sql1);
+						gc1.preparedStatement1.setInt(1, map.get(gc.resultSet1.getInt(3)));
+						gc1.preparedStatement1.setInt(2, gc.resultSet1.getInt(1));
 						
-						gc1.ps1.executeUpdate();
+						gc1.preparedStatement1.executeUpdate();
 						}
 						}catch(NullPointerException npe){}
 						finally {}
@@ -242,7 +242,7 @@ public class PromotionDAO {
 				}finally {
 					try {
 		// 				if (gc.rs1 != null) gc.rs1.close();
-						if (gc.ps1 != null) gc.ps1.close();
+						if (gc.preparedStatement1 != null) gc.preparedStatement1.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -314,20 +314,20 @@ public class PromotionDAO {
 					// first get the smid 
 					
 					try {
-						gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sqlGetSMID);
-						gc.ps1.setInt(1, pro.getAuid());
-						gc.ps1.setInt(2, temp.getStudId());
+						gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sqlGetSMID);
+						gc.preparedStatement1.setInt(1, pro.getAuid());
+						gc.preparedStatement1.setInt(2, temp.getStudId());
 						
-						gc.rs1 = gc.ps1.executeQuery();
+						gc.resultSet1 = gc.preparedStatement1.executeQuery();
 						
-						while(gc.rs1.next()){
+						while(gc.resultSet1.next()){
 						// 	System.out.println("\t\t inside deletion...");
 							// for each smid got delete from studentmesurementdetails first 
 							
 							try{
 								gc.ps2 = GetConnection.getMySQLConnection().prepareStatement(sqlDeleteStudentMesurementDetails);
 
-								gc.ps2.setInt(1, gc.rs1.getInt(1));
+								gc.ps2.setInt(1, gc.resultSet1.getInt(1));
 								gc.ps2.executeUpdate();						
 							}catch(SQLException sqle){}// ducking 
 							finally {
@@ -370,7 +370,7 @@ public class PromotionDAO {
 						e.printStackTrace();
 					}finally {
 						try {
-							if (gc.ps1 != null)	gc.ps1.close();
+							if (gc.preparedStatement1 != null)	gc.preparedStatement1.close();
 
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -402,18 +402,18 @@ public class PromotionDAO {
 					GetConnection gc = new  GetConnection();
 					
 					try {
-						gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sqlInsertStudentMeasurement, Statement.RETURN_GENERATED_KEYS);
+						gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sqlInsertStudentMeasurement, Statement.RETURN_GENERATED_KEYS);
 						
-						gc.ps1.setInt(1, pro.getAuid());
-						gc.ps1.setInt(2, temp.getStudId());
+						gc.preparedStatement1.setInt(1, pro.getAuid());
+						gc.preparedStatement1.setInt(2, temp.getStudId());
 						// change 3rd param with user who is logged in 
-						gc.ps1.setInt(3, 2);
+						gc.preparedStatement1.setInt(3, 2);
 						
-						gc.ps1.executeUpdate();
-						gc.rs1  = gc.ps1.getGeneratedKeys();
+						gc.preparedStatement1.executeUpdate();
+						gc.resultSet1  = gc.preparedStatement1.getGeneratedKeys();
 						
-						if(null != gc.rs1 && gc.rs1.next()){
-							long smid = gc.rs1.getLong(1);
+						if(null != gc.resultSet1 && gc.resultSet1.next()){
+							long smid = gc.resultSet1.getLong(1);
 							gc.ps2 = GetConnection.getMySQLConnection().prepareStatement(sqlInsertStudentMeasurementDetails);
 							for(int i=0; i<noOfMeasurements; i++){
 								gc.ps2.setInt(1,i);
@@ -427,8 +427,8 @@ public class PromotionDAO {
 						e.printStackTrace();
 					}finally {
 						try {
-							if (gc.rs1 != null)		gc.rs1.close();
-							if (gc.ps1 != null)		gc.ps1.close();
+							if (gc.resultSet1 != null)		gc.resultSet1.close();
+							if (gc.preparedStatement1 != null)		gc.preparedStatement1.close();
 							if (gc.ps2 != null)		gc.ps2.close();
 
 						} catch (SQLException e) {
@@ -456,16 +456,16 @@ public class PromotionDAO {
 				String sqlPromotStudent = "update student set class = ? where stid = ?";
 				GetConnection gc = new GetConnection();
 				try {
-					gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sqlPromotStudent);
-					gc.ps1.setString(1, nextClass);
-					gc.ps1.setInt(2, temp.getStudId());
+					gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sqlPromotStudent);
+					gc.preparedStatement1.setString(1, nextClass);
+					gc.preparedStatement1.setInt(2, temp.getStudId());
 					
-					gc.ps1.executeUpdate();
+					gc.preparedStatement1.executeUpdate();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}finally {
 					try {
-						if (gc.ps1 != null)		gc.ps1.close();
+						if (gc.preparedStatement1 != null)		gc.preparedStatement1.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -489,19 +489,19 @@ public class PromotionDAO {
 		GetConnection gc = new GetConnection();
 		
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, unid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, unid);
 			
-			gc.rs1 = gc.ps1.executeQuery();
-			gc.rs1.next();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
+			gc.resultSet1.next();
 			
-			return gc.rs1.getInt(1);
+			return gc.resultSet1.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			try {
-				if (gc.rs1 != null)		gc.rs1.close();
-				if (gc.ps1 != null)		gc.ps1.close();
+				if (gc.resultSet1 != null)		gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)		gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -529,17 +529,17 @@ public class PromotionDAO {
 		GetConnection gc = new GetConnection();
 		List<StudentBean> list = new Vector<StudentBean>();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, schId);
-			gc.ps1.setString(2, cls);
-			gc.ps1.setString(3, sex);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, schId);
+			gc.preparedStatement1.setString(2, cls);
+			gc.preparedStatement1.setString(3, sex);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				StudentBean sb = new StudentBean();
-				sb.setStudId(gc.rs1.getInt(1));
-				sb.setStudName(gc.rs1.getString(2));
+				sb.setStudId(gc.resultSet1.getInt(1));
+				sb.setStudName(gc.resultSet1.getString(2));
 
 				list.add(sb);
 
@@ -549,10 +549,10 @@ public class PromotionDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -573,16 +573,16 @@ public class PromotionDAO {
 		GetConnection gc = new GetConnection();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
-			gc.ps1.setInt(1, stid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql1);
+			gc.preparedStatement1.setInt(1, stid);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
+			while (gc.resultSet1.next()) {
 				ProSrcBean temp = new ProSrcBean();
-				temp.setSmid(gc.rs1.getInt(1));
-				temp.setAuid(gc.rs1.getInt(2));
-				temp.setUnid(gc.rs1.getInt(3));
+				temp.setSmid(gc.resultSet1.getInt(1));
+				temp.setAuid(gc.resultSet1.getInt(2));
+				temp.setUnid(gc.resultSet1.getInt(3));
 
 				list.add(temp);
 			}
@@ -590,8 +590,8 @@ public class PromotionDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)  gc.rs1.close();
-				if (gc.ps1 != null)	 gc.ps1.close();
+				if (gc.resultSet1 != null)  gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)	 gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -610,23 +610,23 @@ public class PromotionDAO {
 
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, auid);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setInt(1, auid);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			gc.rs1.next();
+			gc.resultSet1.next();
 
-			return gc.rs1.getInt(1);
+			return gc.resultSet1.getInt(1);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -648,24 +648,24 @@ public class PromotionDAO {
 		List<Integer> auids = new ArrayList<Integer>();
 
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, sex);
-			gc.ps1.setString(2, cls);
-			gc.ps1.setInt(3, schId);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, sex);
+			gc.preparedStatement1.setString(2, cls);
+			gc.preparedStatement1.setInt(3, schId);
 
-			gc.rs1 = gc.ps1.executeQuery();
+			gc.resultSet1 = gc.preparedStatement1.executeQuery();
 
-			while (gc.rs1.next()) {
-				auids.add(gc.rs1.getInt(1));
+			while (gc.resultSet1.next()) {
+				auids.add(gc.resultSet1.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (gc.rs1 != null)
-					gc.rs1.close();
-				if (gc.ps1 != null)
-					gc.ps1.close();
+				if (gc.resultSet1 != null)
+					gc.resultSet1.close();
+				if (gc.preparedStatement1 != null)
+					gc.preparedStatement1.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -697,16 +697,16 @@ public boolean deleteOutGoingStudents(int schoolId, String currentClass){
 			// first delete from studentmesurementdetails
 			
 			try {
-				gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sqlDeleteStudentMesurementDetails);
-				gc.ps1.setInt(1, temp.getStudId());
+				gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sqlDeleteStudentMesurementDetails);
+				gc.preparedStatement1.setInt(1, temp.getStudId());
 				
-				gc.ps1.executeUpdate();
+				gc.preparedStatement1.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				try {
-					if (gc.ps1 != null)
-						gc.ps1.close();
+					if (gc.preparedStatement1 != null)
+						gc.preparedStatement1.close();
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -777,17 +777,17 @@ public boolean deleteOutGoingStudents(int schoolId, String currentClass){
 		
 		GetConnection gc = new GetConnection();
 		try {
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sqlDeleteAllOrderDetail);
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sqlDeleteAllOrderDetail);
 
-			gc.ps1.addBatch();
+			gc.preparedStatement1.addBatch();
 			
-			gc.ps1.addBatch(sqlDeleteAllStudentOrder);
-			gc.ps1.addBatch(sqlDeleteAllStudentInvoice);
-			gc.ps1.addBatch(sqlResetInvNumber);
-			gc.ps1.addBatch(sqlResetOrderNumber);
+			gc.preparedStatement1.addBatch(sqlDeleteAllStudentOrder);
+			gc.preparedStatement1.addBatch(sqlDeleteAllStudentInvoice);
+			gc.preparedStatement1.addBatch(sqlResetInvNumber);
+			gc.preparedStatement1.addBatch(sqlResetOrderNumber);
 			
 			
-			return gc.ps1.executeBatch().length>0;
+			return gc.preparedStatement1.executeBatch().length>0;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

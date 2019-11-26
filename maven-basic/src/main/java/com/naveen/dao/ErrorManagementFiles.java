@@ -20,14 +20,14 @@ public class ErrorManagementFiles {
 
 
 			GetConnection gc  = new GetConnection(); 
-			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-			gc.ps1.setString(1, orderDate);
-			gc.rs1 = gc.ps1.executeQuery(); 
+			gc.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
+			gc.preparedStatement1.setString(1, orderDate);
+			gc.resultSet1 = gc.preparedStatement1.executeQuery(); 
 			
 			
 			ArrayList<String> orderNumbers = new ArrayList<String>(); 
-			while(gc.rs1.next()){
-				orderNumbers.add(gc.rs1.getString(1)); 
+			while(gc.resultSet1.next()){
+				orderNumbers.add(gc.resultSet1.getString(1)); 
 			}
 			System.out.println(orderNumbers);
 			
