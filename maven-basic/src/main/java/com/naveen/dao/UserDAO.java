@@ -16,12 +16,6 @@ public class UserDAO {
 
     private static final Logger LOGGER = GetConnection.getLogger(UserDAO.class);
 
-    private GetConnection connection;
-    
-    public UserDAO() {
-        connection = new GetConnection();
-    }
-
     public boolean insertUser(UserBean userBean) {
         final String sql = "insert into user (uname, pass,utype, display_name, mobile) values(?,?,?,?,?)";
         try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
@@ -41,19 +35,19 @@ public class UserDAO {
     
     // this method is used in user.jsp to display all registered users.
     public List<UserBean> getAllUsers() {
-        final ArrayList<UserBean> myList = new ArrayList<UserBean>();
+        final ArrayList<UserBean> myList = new ArrayList<>();
         final String sql = "select * from user";
         ResultSet resultSet = null;
         try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 UserBean tempUser = new UserBean();
-                tempUser.setUserId(connection.resultSet1.getInt(1));
-                tempUser.setUserName(connection.resultSet1.getString(2));
-                tempUser.setPassWord(connection.resultSet1.getString(3));
-                tempUser.setUserType(connection.resultSet1.getString(4));
-                tempUser.setDisplayName(connection.resultSet1.getString(5));
-                tempUser.setMobNo(connection.resultSet1.getString(6));
+                tempUser.setUserId(resultSet.getInt(1));
+                tempUser.setUserName(resultSet.getString(2));
+                tempUser.setPassWord(resultSet.getString(3));
+                tempUser.setUserType(resultSet.getString(4));
+                tempUser.setDisplayName(resultSet.getString(5));
+                tempUser.setMobNo(resultSet.getString(6));
                 myList.add(tempUser);
             }
         } catch (SQLException e) {
@@ -68,97 +62,70 @@ public class UserDAO {
     // method is used to check vali     d user
     public boolean validateUser(LoginBean login) {
         final String sql = "select * from user where uname = ? and pass = ? and utype = ?";
-        try {
-            connection.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-            connection.preparedStatement1.setString(1, login.getuName());
-            connection.preparedStatement1.setString(2, login.getPassWord());
-            connection.preparedStatement1.setString(3, login.getUserType());
-            connection.resultSet1 = connection.preparedStatement1.executeQuery();
-            return connection.resultSet1.next();
+        ResultSet resultSet = null;
+        try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, login.getuName());
+            preparedStatement.setString(2, login.getPassWord());
+            preparedStatement.setString(3, login.getUserType());
+            resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
         } catch (SQLException e) {
             LOGGER.error(e);
         } finally {
-            try {
-                if (connection.resultSet1 != null) {
-                    connection.resultSet1.close();   
-                }
-                if (connection.preparedStatement1 != null) {
-                    connection.preparedStatement1.close();   
-                }
-                GetConnection.getMySQLConnection().close();
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            closeResultSet(resultSet);
+            closeConnection();
         }
         return false;
     }
 
     public int getUserId(String uName) {
         final String sql = "select uid from user where uname = ?";
+        ResultSet resultSet = null;
         try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
             preparedStatement.setString(1, uName);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return connection.resultSet1.getInt(1);
+                return resultSet.getInt(1);
             }
         } catch (SQLException e) {
             LOGGER.error(e);
         } finally {
-            try {
-                if (connection.resultSet1 != null) {
-                    connection.resultSet1.close();   
-                }
-                GetConnection.getMySQLConnection().close();
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            closeResultSet(resultSet);
+            closeConnection();
         }
         return 0;
     }
 
     public String getUserType(String uName) {
         final String sql = "select utype from user where uname = ?";
-        try {
-            connection.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-            connection.preparedStatement1.setString(1, uName);
-            connection.resultSet1 = connection.preparedStatement1.executeQuery();
-            if (connection.resultSet1.next()) {
-                return connection.resultSet1.getString(1);
+        ResultSet resultSet = null;
+        try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, uName);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString(1);
             }
         } catch (SQLException e) {
             LOGGER.error(e);
         } finally {
-            try {
-                if (connection.resultSet1 != null)
-                    connection.resultSet1.close();
-                if (connection.preparedStatement1 != null)
-                    connection.preparedStatement1.close();
-                GetConnection.getMySQLConnection().close();
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            closeResultSet(resultSet);
+            closeConnection();
         }
         return null;
     }
 
     public boolean updateUser(UserBean ub) {
         final String sql = "update user set pass=? where uname=?";
-        try {
-            connection.preparedStatement1 = GetConnection.getMySQLConnection().prepareStatement(sql);
-            connection.preparedStatement1.setString(2, ub.getUserName());
-            connection.preparedStatement1.setString(1, ub.getPassWord());
-            return connection.preparedStatement1.executeUpdate() > 0;
+        ResultSet resultSet = null;
+        try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
+            preparedStatement.setString(2, ub.getUserName());
+            preparedStatement.setString(1, ub.getPassWord());
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e);
         } finally {
-            try {
-                if (connection.preparedStatement1 != null) {
-                    connection.preparedStatement1.close();   
-                }
-                GetConnection.getMySQLConnection().close();
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+           closeResultSet(resultSet);
+           closeConnection();
         }
         return false;
     }
