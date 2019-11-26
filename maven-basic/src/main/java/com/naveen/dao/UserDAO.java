@@ -17,7 +17,7 @@ public class UserDAO {
     private static final Logger LOGGER = GetConnection.getLogger(UserDAO.class);
 
     public boolean insertUser(UserBean userBean) {
-        final String sql = "insert into user (uname, pass,utype, display_name, mobile) values(?,?,?,?,?)";
+        final String sql = "insert into user (uname, pass,utype, display_name, mobile) values(?, ?, ?, ?, ?)";
         try(PreparedStatement preparedStatement = GetConnection.getMySQLConnection().prepareStatement(sql)) {
             preparedStatement.setString(1, userBean.getUserName().toUpperCase());
             preparedStatement.setString(2, userBean.getPassWord());
@@ -134,7 +134,7 @@ public class UserDAO {
         try {
             GetConnection.getMySQLConnection().close();
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("Failed to close connection", e);
         }
     }
     
@@ -144,7 +144,7 @@ public class UserDAO {
                 resultSet.close();   
             }
         } catch(SQLException e) {
-             LOGGER.error(e);  
+             LOGGER.error("Failed to close result set", e);  
         }
     }
 
