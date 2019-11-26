@@ -17,11 +17,11 @@ import com.naveen.connection.GetConnection;
  */
 public class OrderDAO {
 
-	static Logger logger = GetConnection.getLogger(OrderDAO.class);
+	private static final Logger LOGGER = GetConnection.getLogger(OrderDAO.class);
 
 	// naveen
 	// this function is called from MakeOrder3.jsp
-	public ArrayList<ArrayList<Object>> getOrderDetailForStudent(int stId) {
+	public List<ArrayList<Object>> getOrderDetailForStudent(int stId) {
 
 		String sql = "select distinct un.unid, un.uname, au.auid, au.cost, au.cgst, au.sgst, au.igst,  "
 				+ "sm.smid, au.couriercost from uniform un, assignuniform au, STUDENTMESUREMENT sm,"
@@ -68,8 +68,8 @@ public class OrderDAO {
 				myobj.add(temp);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.debug("In getOrderDetailForStudent :", e);
+			LOGGER.error(e);
+			LOGGER.debug("In getOrderDetailForStudent :", e);
 		} finally {
 			try {
 				if (gc.rs1 != null)
@@ -78,7 +78,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -111,8 +111,8 @@ public class OrderDAO {
 			gc.ps1.setDouble(8, tax);
 			return gc.ps1.executeUpdate() > 0;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.debug("in insertOrderDetail ", e);
+			LOGGER.error(e);
+			LOGGER.debug("in insertOrderDetail ", e);
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
@@ -120,7 +120,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -164,8 +164,8 @@ public class OrderDAO {
 			
 			return gc.ps1.executeUpdate() > 0;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.debug("in insertOrderDetail ", e);
+			LOGGER.error(e);
+			LOGGER.debug("in insertOrderDetail ", e);
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
@@ -173,7 +173,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -235,15 +235,15 @@ public class OrderDAO {
 				return oId;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.debug(" in insertStudentOrder ", e);
+			LOGGER.error(e);
+			LOGGER.debug(" in insertStudentOrder ", e);
 		} finally {
 			try {
 				if (gc.ps1 != null)
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			GetConnection.closeConnection();
 		}
@@ -265,14 +265,14 @@ public class OrderDAO {
 			return gc.ps1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.debug("in approveOrder ", e);
+			LOGGER.error(e);
+			LOGGER.debug("in approveOrder ", e);
 		} finally {
 			try {
 				if (gc.ps1 != null)
 					gc.ps1.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			GetConnection.closeConnection();
 		}
@@ -304,14 +304,14 @@ public class OrderDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.debug("in approveOrder ", e);
+			LOGGER.error(e);
+			LOGGER.debug("in approveOrder ", e);
 		} finally {
 			try {
 				if (gc.ps1 != null)
 					gc.ps1.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			GetConnection.closeConnection();
 		}
@@ -342,7 +342,7 @@ public class OrderDAO {
 			return gc.ps1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
@@ -350,7 +350,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			GetConnection.closeConnection();
 		}
@@ -380,14 +380,14 @@ public class OrderDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.debug("in approveOrder ", e);
+			LOGGER.error(e);
+			LOGGER.debug("in approveOrder ", e);
 		} finally {
 			try {
 				if (gc.ps1 != null)
 					gc.ps1.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			GetConnection.closeConnection();
 		}
@@ -420,7 +420,7 @@ public class OrderDAO {
 
 			return list;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				if (gc.rs1 != null)
@@ -429,7 +429,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			GetConnection.closeConnection();
 		}
@@ -469,7 +469,7 @@ public class OrderDAO {
 
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				if (gc.rs1 != null)
@@ -478,7 +478,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			GetConnection.closeConnection();
 		}
@@ -509,7 +509,7 @@ public class OrderDAO {
 				return null;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				if (gc.rs1 != null)
@@ -518,7 +518,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -548,7 +548,7 @@ public class OrderDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				if (gc.rs1 != null)
@@ -557,7 +557,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -578,7 +578,7 @@ public class OrderDAO {
 			return gc.ps1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
@@ -586,7 +586,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -605,7 +605,7 @@ public class OrderDAO {
 			return gc.ps1.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
@@ -613,7 +613,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			GetConnection.closeConnection();
 		}
@@ -632,7 +632,7 @@ public class OrderDAO {
 
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				if (gc.rs1 != null)
@@ -641,7 +641,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -670,7 +670,7 @@ public class OrderDAO {
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.error(e);
 			} finally {
 				try {
 					// if(gc.rs1!=null)gc.rs1.close();
@@ -678,7 +678,7 @@ public class OrderDAO {
 						gc.ps1.close();
 
 				} catch (SQLException e) {
-					e.printStackTrace();
+					LOGGER.error(e);
 				}
 
 				GetConnection.closeConnection();
@@ -732,17 +732,17 @@ public class OrderDAO {
 				orderInvoiceBean.setInvoiceNumber(invoiceNumberGenerated);
 				listOfOrders.add(orderInvoiceBean);
 				
-				logger.info("Invoice Generated for " + orderInvoiceBean.getStudentId() +", order id " + orderInvoiceBean.getoId() +", invoice number : " + invoiceNumberGenerated);
+				LOGGER.info("Invoice Generated for " + orderInvoiceBean.getStudentId() +", order id " + orderInvoiceBean.getoId() +", invoice number : " + invoiceNumberGenerated);
 		
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					LOGGER.error(e);
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.debug(e.getMessage());
+			LOGGER.error(e);
+			LOGGER.debug(e.getMessage());
 			// clearing this because in TaxInvoiceBulkController, while forwarding checking for >0, so it should goto else clause 
 			// and show error in index.jsp 
 			
@@ -773,7 +773,7 @@ public class OrderDAO {
 				return gc.rs1.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
@@ -781,7 +781,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -814,7 +814,7 @@ public class OrderDAO {
 
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				if (gc.rs1 != null)
@@ -823,7 +823,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -847,7 +847,7 @@ public class OrderDAO {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
@@ -855,7 +855,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -881,7 +881,7 @@ public class OrderDAO {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				// if(gc.rs1!=null)gc.rs1.close();
@@ -889,7 +889,7 @@ public class OrderDAO {
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -911,18 +911,18 @@ public class OrderDAO {
 			gc.ps1 = GetConnection.getMySQLConnection().prepareStatement(sql);
 			gc.ps1.setInt(1, schId);
 			boolean flag = gc.ps1.executeUpdate() > 0;
-			logger.info("School Order id : " + new SchoolDAO().getSchool(schId).getSchName() + " incremented by 1");
+			LOGGER.info("School Order id : " + new SchoolDAO().getSchool(schId).getSchName() + " incremented by 1");
 			return flag;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				if (gc.ps1 != null)
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -958,19 +958,19 @@ public class OrderDAO {
 				
 				listOrderDetail.add(odb);
 
-				logger.info(odb);
+				LOGGER.info(odb);
 				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			try {
 				if (gc.ps1 != null)
 					gc.ps1.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			GetConnection.closeConnection();
@@ -992,18 +992,10 @@ public class OrderDAO {
 			gc.ps1.setInt(2, odid);
 			return gc.ps1.executeUpdate()>0;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(e);
 		} 
 		
 		return false; 
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-}// end
+}
